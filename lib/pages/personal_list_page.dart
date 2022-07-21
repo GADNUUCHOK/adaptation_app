@@ -1,6 +1,5 @@
 import 'package:adaptation_app/model/person.dart';
 import 'package:adaptation_app/repo/person_repo.dart';
-import 'package:adaptation_app/widgets/action_bottom_sheet.dart';
 import 'package:adaptation_app/widgets/adaptive_widget.dart';
 import 'package:adaptation_app/widgets/grid_widget.dart';
 import 'package:adaptation_app/widgets/list_widget.dart';
@@ -14,6 +13,20 @@ class PersonsPage extends StatefulWidget {
 }
 
 class _PersonsPageState extends State<PersonsPage> {
+
+  int? _currentProduct;
+  late void Function(int) _onPersonTap;
+
+  @override
+  void initState() {
+    super.initState();
+    _onPersonTap = (index) {
+      setState(() {
+        _currentProduct = index;
+      });
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,6 +38,7 @@ class _PersonsPageState extends State<PersonsPage> {
             return AdaptiveWidget(
               list: ListWidget(
                 listPerson: listPersons,
+                  currentProduct: _currentProduct, onProductTap: _onPersonTap
               ),
               grid: GridWidget(
                 listPerson: listPersons,

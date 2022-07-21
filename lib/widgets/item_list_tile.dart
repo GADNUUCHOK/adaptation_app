@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 
 class ItemListTile extends StatelessWidget {
   final Person person;
+  int? currentProduct;
+  void Function(int) onProductTap;
+  int index;
 
-  const ItemListTile({Key? key, required this.person}) : super(key: key);
+  ItemListTile({Key? key, required this.person, required this.currentProduct, required this.onProductTap, required this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +16,8 @@ class ItemListTile extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       child: ListTile(
         onTap: () {
+          currentProduct = index;
+          onProductTap(index);
           showModalBottomSheet(
               context: context,
               builder: (context) => const BottomActionSheet());
