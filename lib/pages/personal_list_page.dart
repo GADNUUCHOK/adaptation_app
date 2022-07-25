@@ -15,23 +15,20 @@ class PersonsPage extends StatefulWidget {
 class _PersonsPageState extends State<PersonsPage> {
 
   int? _currentProduct;
-  late void Function(int) _onPersonTap;
+  void _onPersonTap(index) { _currentProduct = index;}
+  Future<List<Person>>? listPersons;
 
   @override
   void initState() {
     super.initState();
-    _onPersonTap = (index) {
-      setState(() {
-        _currentProduct = index;
-      });
-    };
+    listPersons = fetchPersonAssets('assets/persons.json');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder<List<Person>>(
-        future: fetchPersonAssets('assets/persons.json'),
+        future: listPersons,
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
             var listPersons = snapshot.data;
